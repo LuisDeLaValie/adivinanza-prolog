@@ -1,4 +1,6 @@
 % Lista de adivinanzas y sus respuestas
+% el echo adivinanza consite en la adivinaza y su respeusta
+% `adivinanza(adivianza, respuesta)`
 adivinanza("Blanco por dentro, verde por fuera. Si quieres que te lo diga, espera.", sandia).
 adivinanza("De muchos colores me veras, por el campo voy y no ando jamas.", arcoiris).
 adivinanza("Con cincuenta ojos y una lengua, siempre esta cerca de una fragua.", abanico).
@@ -13,6 +15,8 @@ adivinanza("Pequeña como una pera, pero alumbra toda la casa entera.", bombilla
 
 
 % Predicado para seleccionar una adivinanza aleatoria
+% creamos una regla que buscara los echos `adivinanza`  y selecciona una de forma aleatorio
+% esta es devuenta en la variables `Adivinanza` y `Respuesta`
 seleccionar_adivinanza(Adivinanza, Respuesta) :-
     findall((Adiv, Resp), adivinanza(Adiv, Resp), Adivinanzas),
     length(Adivinanzas, Length),
@@ -23,6 +27,9 @@ seleccionar_adivinanza(Adivinanza, Respuesta) :-
 
 
 % Predicado para jugar
+% En esta regla iniciamos el jeugo, usamos el comando `writeln` para poder escribir en pantalla y
+% el comando `read` para poder leer una respuesta del usuario
+% y mandamos la respota coreecta y la respusta del uasrio a la regla `validar_respuesta` para validar la respuesta
 jugar_adivinanza :-
     writeln("¡Bienvenido al juego de adivinanzas!"),
     seleccionar_adivinanza(Adivinanza, Respuesta),
@@ -34,11 +41,16 @@ jugar_adivinanza :-
 
 
 % Predicado para validar la respuesta del usuario
+% comprobamos si la respuesta correcta y la respuesta del usuario son identicas,
+% si lo son entonces escribira que as adivida correcta amente
 validar_respuesta(RespuestaUsuario, RespuestaCorrecta) :-
     RespuestaUsuario = RespuestaCorrecta,
     writeln("¡Correcto! ¡Has adivinado la respuesta!"),
     writeln("¡Felicidades!"),
     !.
+
+% Al validar la regla que las respeustas no son correctas en este caso se le indicara al ususuario
+% que su respuesta fue incorrecta y se le ortoga una pista
 validar_respuesta(_, RespuestaCorrecta) :-
     writeln("¡Incorrecto! ¡Inténtalo de nuevo!"),
     writeln("Aqui tienes una pista: la respuesta tiene "),
